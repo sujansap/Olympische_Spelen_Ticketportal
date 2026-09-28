@@ -1,0 +1,17 @@
+<html>
+<head>
+
+</head>
+<body>
+<div th:fragment="navbar" class="navbar">
+		<span> <a class="go-home" th:href="|/sporten|">OlympicParis</a></span>
+        <span th:if="${username}" class="hello-msg" th:text="|Hallo ${username}|"></span>
+        <form th:if="${username}" th:action="@{/logout}" method="post">
+            <input type="submit" value="Uitloggen" /> 
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+        </form>
+    </div>
+</body>
+
+
+</html>

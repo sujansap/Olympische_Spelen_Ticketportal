@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Ticket kopen</title>
+<link rel="stylesheet" th:href="@{/css/style.css}" />
+<link rel="stylesheet" th:href="@{/css/styleNavbar.css}" />
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+</head>
+<body>
+	<div th:replace="~{fragments/navbar.html :: navbar}"></div>
+	<a th:href="|/sporten|"><button class="terug-knop"> < Terug</button></a>
+	<h1>Lijst al gekochte tickets</h1>
+	<table th:if="${not #lists.isEmpty(tickets)}">
+			<thead>
+			    <tr>
+			      <th>Sport</th>
+			      <th>Datum en Aanvangsuur</th>
+			      <th>Aantal</th>
+			      <th>Aangekocht op </th>
+			      <th>Details wedstrijd </th>
+			    </tr>
+			  </thead>
+			  <tbody>
+			    <tr th:each="ticket : ${tickets}">
+			      <td th:text="${ticket.wedstrijd.sport.sportNaam}"></td>
+			      <td th:text="${{ticket.wedstrijd.datumEnAanvangsuur}}"></td>
+			      <td th:text="${ticket.aantal}"></td>
+			      <td th:text="${{ticket.aangekochtOp}}"></td>
+			      <td><a th:href="|/wedstrijden/${ticket.wedstrijd.sport.id}/details/${ticket.wedstrijd.id}|">Details</a></td>
+			    </tr>
+			  </tbody>
+	</table>
+	
+	<div th:if="${#lists.isEmpty(tickets)}">
+		<p>Er zijn nog geen tickets aangekocht.</p>
+	</div>
+    
+    <div th:replace="~{fragments/footer.html :: footer}"></div>
+</body>
+</html>

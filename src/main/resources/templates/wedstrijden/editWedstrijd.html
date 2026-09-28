@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title th:text="#{label_wedstrijd_new}"></title>
+<link rel="stylesheet" th:href="@{/css/style.css}" />
+<link rel="stylesheet" th:href="@{/css/styleNavbar.css}" />
+<!-- you can include a JavaScript file using the script tag with the src attribute in a Thymeleaf template -->
+<!-- <script th:src="@{/scripts/yourJavascriptFile.js}"></script>  -->
+
+<link rel="stylesheet"
+	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+</head>
+<body>
+	<script type="text/javascript">
+		$(function() {
+			var dateFormat = '[[#{date.format.patternjs}]]';
+			$("#datepicker").datetimepicker({
+				format : dateFormat
+			
+			});
+		});
+	</script>
+	
+	<div th:replace="~{fragments/navbar.html :: navbar}"></div>
+	<a th:href="|/wedstrijden/${sportId}|"><button class="terug-knop"> < Terug</button></a>
+	<!-- TODO  if contact.id} == null then show label_contact_new else show label_contact_update  -->
+	<h1 th:text=" #{label_wedstrijd_new}"></h1>
+
+	<!-- TODO form  -->
+	<form th:object="${wedstrijd}" method="post">
+	<div class="form-box">
+		<!-- TODO if message exists then show message.message-->
+		<p th:if="${message}" th:class="${message.type}"
+			th:text="${message.message}"></p>
+			<p th:if="${errorSaving}"
+			th:text="${errorSaving}"></p>
+
+
+
+		<p class="input-veld-lable">
+			<label th:text="#{label_wedstrijd_datumEnUur}"></label>
+			<!--  <input
+				type=datetime id="datepicker" th:field="*{datumEnAanvangsuur}"  />-->
+			<input type="datetime-local" id="datepicker"  step="1"
+				th:field="*{datumEnAanvangsuur}" th:min="#{olympic.2024.start}" th:max="#{olympic.2024.end}"required  /> <label
+				th:if="${#fields.hasErrors('datumEnAanvangsuur')}"
+				th:errorclass="error" th:errors="*{{datumEnAanvangsuur}}"></label>
+		</p>
+		<p>
+			<label th:text="#{label_wedstrijd_stadium}"></label>
+			 <select  th:field="*{hulpStadiumId}"
+				id="dropDownList">
+				<option value="0">select option</option>
+				<option th:each="stadium : ${stadiums}"
+					th:value="${stadium.id}" th:text="${stadium.stadiumNaam}"></option>
+			</select>
+
+		</p>
+		<p>
+			<label th:text="#{label_wedstrijd_olympischeNr1}"></label> <input
+				type="text" th:field="*{olympischNummer1}" maxlength="5"> <label
+				th:if="${#fields.hasErrors('olympischNummer1')}"
+				th:errorclass="error" th:errors="*{{olympischNummer1}}"></label>
+		</p>
+		<p>
+			<label th:text="#{label_wedstrijd_olympischeNr2}"></label> <input
+				type="text" th:field="*{olympischNummer2}" maxlength="5"> <label
+				th:if="${#fields.hasErrors('olympischNummer2')}"
+				th:errorclass="error" th:errors="*{{olympischNummer2}}"></label>
+		</p>
+		
+				<p>
+			<label th:text="#{label_wedstrijd_discipline1}"></label> <input
+				type="text" th:field="*{discipline1}" > <label
+				th:if="${#fields.hasErrors('discipline1')}"
+				th:errorclass="error" th:errors="*{{discipline1}}"></label>
+		</p>
+		<p>
+			<label th:text="#{label_wedstrijd_discipline2}"></label> <input
+				type="text" th:field="*{discipline2}" > 
+		</p>
+
+
+
+		<p>
+			<!-- min="0" max="150" required min="0" max="150" required-->
+			 <label th:text="#{label_wedstrijd_prijs}"></label> <input
+				type="number" id="ticketPrice" th:field="*{ticketPrijs}"
+				name="ticketPrice" step="0.01" /> <label
+				th:if="${#fields.hasErrors('ticketPrijs')}" th:errorclass="error"
+				th:errors="*{{ticketPrijs}}"></label>
+
+
+		</p>
+		
+				<p>
+			<!-- min="0" max="150" required min="0" max="150" required-->
+			 <label th:text="#{label_wedstrijd_aantalPlaatsen}"></label> <input
+				type="number" id="ticketPrice" th:field="*{aantalPlaatsen}"
+				name="aantalPlaatsen" step="0.01" /> <label
+				th:if="${#fields.hasErrors('aantalPlaatsen')}" th:errorclass="error"
+				th:errors="*{{aantalPlaatsen}}"></label>
+
+
+		</p>
+		
+		<input type="hidden" name="_csrf" th:value="${_csrf.token}" />
+
+		<button type="submit">Toevoegen</button>
+</div>
+	</form>
+	<div th:replace="~{fragments/footer.html :: footer}"></div>
+</body>
+</html>

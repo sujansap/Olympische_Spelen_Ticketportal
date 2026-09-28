@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+
+<title>Wedstrijden</title>
+<link rel="stylesheet" th:href="@{/css/style.css}" />
+<link rel="stylesheet" th:href="@{/css/styleNavbar.css}" />
+</head>
+<body>
+	<div th:replace="~{fragments/navbar.html :: navbar}"></div>
+
+
+	<th:block th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+		<a th:href="|/wedstrijden/${sportId}/add|"><button
+				class="voeg-toe-wedstrijd">+ Voeg een wedstrijd</button></a>
+	</th:block>
+	<th:block
+		th:unless="${#authorization.expression('hasRole(''ADMIN'')')}">
+
+	</th:block>
+
+	<h1>Wedstrijden</h1>
+
+	<th:block th:if="${#lists.size(wedstrijdenLijst) > 0}">
+
+
+		<table>
+			<tr>
+				<th>Naam stadium</th>
+				<th>Datum en aanvangsuur</th>
+
+				<th>Discipline(s)</th>
+				<th>Aantal vrije plaatsen</th>
+				<th>Prijs van 1 ticket(€)</th>
+				<th>Details</th>
+			</tr>
+			<tr th:each="wedstrijd: ${wedstrijdenLijst}">
+				<td th:text="${wedstrijd.stadium.stadiumNaam}"></td>
+
+					<td th:text="${{wedstrijd.datumEnAanvangsuur}}"></td>
+				
+
+				
+				<td>
+				    <span th:text="'1. ' + ${wedstrijd.discipline1}"></span>
+				    <th:block th:if="${!#strings.isEmpty(wedstrijd.discipline2)}">
+				    <br />
+				    <span th:if="${!#strings.isEmpty(wedstrijd.discipline2)}" th:text="' 2. ' + ${wedstrijd.discipline2}"></span>
+				    </th:block>
+				  
+    				
+				</td>
+
+
+				<td th:if="${wedstrijd.aantalPlaatsen > 0}"
+					th:text="${wedstrijd.aantalPlaatsen}"></td>
+
+				<td th:if="${wedstrijd.aantalPlaatsen <= 0}"
+					th:text="#{message.wedstrijd.geenplaats}"></td>
+
+
+
+				<th:block
+					th:unless="${#authorization.expression('hasRole(''ADMIN'')')}">
+					<td th:if="${wedstrijd.aantalPlaatsen > 0}"
+						th:text="${#numbers.formatDecimal(wedstrijd.ticketPrijs,1,2)}"></td>
+					<td th:unless="${wedstrijd.aantalPlaatsen > 0}">/</td>
+				</th:block>
+
+				<th:block th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+					<td th:text="${#numbers.formatDecimal(wedstrijd.ticketPrijs,1,2)}"></td>
+				</th:block>
+
+
+				<td><a
+					th:href="|/wedstrijden/${sportId}/details/${wedstrijd.id}|">Details</a></td>
+
+
+
+			</tr>
+		</table>
+	</th:block>
+
+	<th:block th:unless="${#lists.size(wedstrijdenLijst) > 0}">
+
+		<p>Nog geen wedstrijden!</p>
+		<th:block th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+			<p>Je bent admin je kan ze toevoegen.</p>
+		</th:block>
+	</th:block>
+	<div th:replace="~{fragments/footer.html :: footer}"></div>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Ticket kopen</title>
+<link rel="stylesheet" th:href="@{/css/style.css}" />
+<link rel="stylesheet" th:href="@{/css/styleNavbar.css}" />
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+</head>
+<body>
+	<div th:replace="~{fragments/navbar.html :: navbar}"></div>
+	<a th:href="|/wedstrijden/${sportId}/details/${wedstrijdId}|"><button class="terug-knop"> < Terug</button></a>
+	<h1>Koop ticket</h1>
+	<span>aantal</span>
+	<form th:object="${ticket}" method="post">
+    <select id="aantal" th:field="*{aantal}">
+        <option th:each="number : ${#numbers.sequence(1, aantalBeschikbarePlaatsen)}"
+                th:value="${number}" 
+                th:text="${number}">
+        </option>
+    </select>
+        <label
+				th:if="${#fields.hasErrors('aantal')}"
+				th:errorclass="error" th:errors="*{{aantal}}"></label>
+    <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
+    <button type="submit">Kopen</button>
+
+    
+    <div th:replace="~{fragments/footer.html :: footer}"></div>
+</form>
+</body>
+</html>

@@ -1,0 +1,19 @@
+<html>
+<head>
+
+</head>
+<body>
+<div th:fragment="footer" class="footer">
+<footer>
+	<span th:if="${#authentication}">
+	    <span class="linker-msg">Huidige rol: 
+	             <span th:each="role : ${#authentication.authorities}"
+              th:text="${#strings.replace(role.authority, 'ROLE_', '')}">Role</span>
+	    </span>
+	</span>
+  <span> | </span>	
+  <span class="rechter-msg">Project EWDJ</span>
+</footer>
+</div>
+</body>
+</html>

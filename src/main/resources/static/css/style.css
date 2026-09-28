@@ -1,0 +1,112 @@
+.error {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+}
+
+.msg {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    color: #31708f;
+    background-color: #d9edf7;
+    border-color: #bce8f1;
+}
+
+#login-box {
+    width: 300px;
+    padding: 20px;
+    margin: 100px auto;
+    background: #fff;
+    border-radius: 2px;
+   
+    box-shadow: 0 4px 8px 1px rgba(0, 0, 0, 0.2), 0 5px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+  
+}
+
+td,th {
+  border: 1px solid blue;
+  text-align: left;
+  padding: 8px;
+}
+th{
+ background-color: #01688F;
+ color: white;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+.voeg-toe-wedstrijd{
+	  margin-bottom:5px;
+	  margin-top:10px;
+	  background-color: #01688F;
+	  border: none;
+	  color: white;
+	  padding: 15px 32px;
+	  text-align: center;
+	  cursor: pointer;
+	  float:right;
+}
+
+.voeg-toe-wedstrijd:hover{
+	 
+	  background-color: #037eab;
+	
+
+}
+
+button{
+	background-color: #03678E;
+	color: white;
+	border: none;
+	padding: 10px 20px;
+	cursor: pointer;
+}
+
+button:hover {
+	text-decoration:underline ;
+}
+
+button:disabled {
+	cursor: not-allowed;
+	background-color: grey;
+}
+
+button:disabled:hover {
+	text-decoration:none;
+}
+input{
+	margin: 10px;
+}
+
+select{
+	margin:10px;
+}
+
+.login-box{
+	display:flex;
+	flex-direction: column;
+	
+}
+
+.login-box input{
+	padding: 10px;
+}
+
+.terug-knop{
+	margin-top:10px;
+}
+

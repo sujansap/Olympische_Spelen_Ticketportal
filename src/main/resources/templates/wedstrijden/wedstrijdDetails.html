@@ -1,0 +1,126 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Details</title>
+<link rel="stylesheet" th:href="@{/css/style.css}" />
+<link rel="stylesheet" th:href="@{/css/styleNavbar.css}" />
+<link rel="stylesheet" th:href="@{/css/wedstrijdDetails.css}" />
+</head>
+<body>
+	<div th:replace="~{fragments/navbar.html :: navbar}"></div>
+	<a th:href="|/wedstrijden/${sportId}|"><button class="terug-knop"> < Terug</button></a>
+	<h1>Details van Wedstrijd</h1>
+	<div class="details">
+		<div class="item">
+			<p>
+				<strong>Stadium:</strong> <span
+					th:text="${wedstrijd.stadium.stadiumNaam}"></span>
+			</p>
+			<p>
+			  <strong>Datum en Aanvangsuur:</strong>
+			 
+		 	<!-- 
+		 	!!
+		 	hier moet normaal dit zijj:
+		 		<strong>Stadium:</strong> <span
+					th:text="${{wedstrijd.datumEnAanvangsuur}}"></span>
+					
+			en het werkt perfect in de browser.
+			Maar tijdens het runnen van de testen kijg ik een error
+			org.thymeleaf.exceptions.TemplateProcessingException.
+			Als ik maar enkle<strong>Stadium:</strong> <span
+					th:text="${wedstrijd.datumEnAanvangsuur}"></span> dan slaagt de test wel
+		 	 -->
+			 <!--  <span th:with="dateFormat=#{date.format.pattern.show}"> </span> 
+			  deze methode ook geprobeerd maar bij teste werkt het dan niet-->
+			
+			
+		  	<span th:text="${{wedstrijd.datumEnAanvangsuur}}"></span>
+					
+
+
+			</p>
+			<p>
+				<strong>Capaciteit:</strong> <span
+					th:text="${wedstrijd.capaciteit}"></span>
+			</p>
+			<p>
+				<strong>Aantal Plaatsen Beschikbaar:</strong> <span
+					th:text="${wedstrijd.aantalPlaatsen}"></span>
+			</p>
+			<p>
+				<strong>Olympisch Nummer 1:</strong> <span
+					th:text="${wedstrijd.olympischNummer1}"></span>
+			</p>
+			<p>
+				<strong>Olympisch Nummer 2:</strong> <span
+					th:text="${wedstrijd.olympischNummer2}"></span>
+			</p>
+
+
+			<th:block th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+			<p>
+					<strong>Ticket Prijs(&euro;):</strong> <span
+					th:text="${#numbers.formatDecimal(wedstrijd.ticketPrijs,1,2)}"></span>
+			</p>
+			</th:block>
+			
+			<th:block
+				th:unless="${#authorization.expression('hasRole(''ADMIN'')')}">
+
+				<p th:if="${toonPrijs}">
+				<strong>Ticket Prijs(&euro;):</strong> <span
+					th:text="${#numbers.formatDecimal(wedstrijd.ticketPrijs,1,2)}"></span>
+				</p>
+			</th:block>
+
+			
+			<p>
+				<strong>Discipline 1:</strong> <span
+					th:text="${wedstrijd.discipline1}"></span>
+			</p>
+			<p>
+				<strong>Discipline 2:</strong> <span
+					th:text="${wedstrijd.discipline2}"></span>
+			</p>
+		</div>
+		
+		
+		<div class="item" th:unless="${#authorization.expression('hasRole(''ADMIN'')')}">
+			<p th:if="${ticketGekocht}" th:text="${ticketGekocht == 1 ? '1 ticket werd aangekocht!' : ticketGekocht + ' tickets werden aangekocht!'}"></p>
+		
+			<a th:href="|/tickets/${wedstrijd.id}|"><button th:if="${toonPrijs}">Koop tickets</button></a>
+			
+		
+			<th:block th:unless="${toonPrijs}">
+			<a ><button disabled>Koop ticket</button></a> </th:block>
+			
+			<th:block th:unless="${tickets}">
+			<p>Je hebt nog geen tickets gekocht voor deze wedstrijd!</p>
+			</th:block>
+			<th:block th:if="${tickets}">
+			<p >Je hebt al tickets gekocht voor deze wedstrijd</p>
+			<table>
+			  <thead>
+			    <tr>
+			      <th>Aantal</th>
+			      <th>Aangekocht op </th>
+			     
+			    </tr>
+			  </thead>
+			  <tbody>
+			    <tr th:each="ticket : ${tickets}">
+			     
+			      <td th:text="${ticket.aantal}"></td>
+			      <td th:text="${{ticket.aangekochtOp}}"></td>
+			    </tr>
+			  </tbody>
+			</table>
+			</th:block>
+		</div>
+	</div>
+	<div th:replace="~{fragments/footer.html :: footer}"></div>
+</body>
+</html>

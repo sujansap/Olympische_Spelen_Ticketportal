@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Login Page</title>
+<link rel="stylesheet" th:href="@{/css/style.css}" />
+<link rel="stylesheet" th:href="@{/css/styleNavbar.css}" />
+</head>
+<body onload='document.loginForm.username.focus();'>
+	<div th:replace="~{fragments/navbar.html :: navbar}"></div>
+
+	<div id="login-box">
+
+		<h3>Login</h3>
+
+		<div th:if="${error}" class="error" th:text="#{error.login.verkeerd}"></div>
+
+		<div th:if="${msg}" class="msg" th:text="#{success.logout.gelukt}"></div>
+
+		<form th:action="@{/login}" method="post">
+			<div class="login-box">
+				
+					<span>Gebruikersnaam:</span>
+					<input type='text' name='username' value='' placeholder="gebruikersnaam">
+				
+				
+					<span>Wachtwoord:</span>
+					<input type='password' name='password' placeholder="wachtwoord"/>
+				
+				
+					<button name="submit" type="submit">Login</button>
+				
+			</div>
+
+			<input type="hidden" name="_csrf" th:value="${_csrf.token}" />
+
+		</form>
+	</div>
+	<div th:replace="~{fragments/footer.html :: footer}"></div>
+
+</body>
+</html>

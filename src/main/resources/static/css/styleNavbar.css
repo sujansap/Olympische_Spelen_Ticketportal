@@ -1,0 +1,53 @@
+.navbar {
+	background-color: #03678E;
+	color: white;
+	padding: 10px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	box-shadow: 0 4px 8px 1px rgba(0, 0, 0, 0.2), 0 5px 20px 0 rgba(0, 0, 0, 0.19);
+	
+}
+
+.hello-msg {
+	margin: 0;
+	margin-left: auto;
+	
+}
+.go-home {
+    text-decoration: bold;
+    font-size:25px;
+    background: linear-gradient(120deg, white, #FF474D); 
+    -webkit-background-clip: text; 
+    -webkit-text-fill-color: transparent; 
+    
+}
+
+.navbar form {
+	display: inline-block;
+}
+
+.navbar input[type="submit"] {
+	background-color: #03678E;
+	color: white;
+	border: none;
+	padding: 5px 10px;
+	cursor: pointer;
+}
+
+.navbar input[type="submit"]:hover {
+	text-decoration:underline ;
+}
+
+
+footer {
+  text-align: center;
+  padding: 3px;
+  background-color: #03678E;
+  color: white;
+  margin-top:30px;
+}
+
+.linker-msg {
+	text-align: left;
+}
